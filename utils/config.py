@@ -10,6 +10,7 @@ class Tokens:
     SRA: str = os.getenv("SRA_API_KEY")
     bot: str = os.getenv("TOKEN")
     weathermap: str = os.getenv("OPEN_WEATHER_MAP_API_KEY")
+    oauth_token: str = os.getenv("OAUTH_TOKEN")
 
 
 @dataclass
