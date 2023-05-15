@@ -31,7 +31,7 @@ class Birthday(commands.Cog):
         pass
 
     @birthday.sub_command(
-        name="set", description="Set your birthday. Cant be removed without Staff."
+        name="set", description="Set your birthday. It can't be removed without a staff member's assistance."
     )
     async def set(
         self,
@@ -49,21 +49,21 @@ class Birthday(commands.Cog):
         ),
     ):
         if month is None or day is None:
-            return await errorEmb(inter, "You need to provide a month and a day")
+            return await errorEmb(inter, "You need to provide a month and a day of your birthday.")
         if day < 1 or day > 31:
-            return await errorEmb(inter, "The day must be between 1 and 31")
+            return await errorEmb(inter, "The day of your birthday must be between the 1st and 31st.")
 
         birth_date = f"{day}/{month}"
         try:
             await self.birthday.create_user(inter.author.id, birth_date)
         except UserAlreadyExists:
-            return await errorEmb(inter, "You already have a birthday set")
+            return await errorEmb(inter, "You already have a birthday set.")
 
-        await sucEmb(inter, f"Your birthday has been set to {birth_date}")
+        await sucEmb(inter, f"Your birthday has been set to {birth_date}.")
 
     @commands.has_permissions(manage_roles=True)
     @birthday.sub_command(
-        name="edit", description="Edit a users birthday. Can only be done by Staff."
+        name="edit", description="Edit a user's birthday. Can only be done by a staff member."
     )
     async def edit(
         self,
@@ -84,27 +84,27 @@ class Birthday(commands.Cog):
             await self.birthday.update_user(user.id, f"{day}/{month}")
             return await sucEmb(inter, f"Birthday has been updated to {day}/{month}")
         except UserNotFound:
-            return await errorEmb(inter, "The User doesn't have a birthday set")
+            return await errorEmb(inter, "The user doesn't have a birthday set.")
 
     @commands.has_permissions(manage_roles=True)
     @birthday.sub_command(
-        name="remove", description="Remove a birthday. Can only be done by Staff."
+        name="remove", description="Remove a birthday. Can only be done by staff."
     )
     async def remove(
         self,
         inter: disnake.ApplicationCommandInteraction,
         user: disnake.User = commands.Param(
-            name="user", description="Removes the birthday of this user"
+            name="user", description="Removes the birthday of this user."
         ),
     ):
         try:
             await self.birthday.delete_user(user.id)
         except UserNotFound:
-            return await errorEmb(inter, "This user doesn't have a birthday set")
+            return await errorEmb(inter, "This user doesn't have a birthday set.")
 
-        await sucEmb(inter, "The birthday has been removed")
+        await sucEmb(inter, "The birthday has been removed.")
 
-    @birthday.sub_command(name="get", description="Get the birthday of a user")
+    @birthday.sub_command(name="get", description="Get the birthday of a user.")
     async def get(
         self, inter, user: disnake.User = commands.Param(name="user", default=None)
     ):
@@ -126,7 +126,7 @@ class Birthday(commands.Cog):
             )
         await QuickEmb(
             inter,
-            f"{user.mention}'s birthday is in {(next_birthday - datetime.datetime.now()).days} Days."
+            f"{user.mention}'s birthday is in {(next_birthday - datetime.datetime.now()).days} days."
             f" <t:{str(next_birthday.timestamp()).split('.')[0]}:D>",
         ).send()
 
