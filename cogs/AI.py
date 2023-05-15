@@ -12,7 +12,7 @@ class AI(commands.Cog):
     def __init__(self, bot: OGIROID):
         self.bot = bot
 
-    @commands.slash_command(description="Generates ai art")
+    @commands.slash_command(description="Generates AI art")
     async def ai_art(self, inter: disnake.ApplicationCommandInteraction, text):
         ETA = int(time.time() + 60)
         await inter.send(
